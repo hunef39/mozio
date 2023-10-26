@@ -38,6 +38,10 @@ export function ComboBox({
     selectOnFocus: true,
     clearOnBlur: false,
     value: selected,
+    openOnFocus: true,
+    isOptionEqualToValue(option, value) {
+      return option.id === value.id;
+    },
   });
 
   const shouldDisplayMenu =
