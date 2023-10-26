@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import "./App.css";
+import { Destination } from "./api/model";
+import { ComboBox } from "./components/ComboBox";
+import { DestinationDetails } from "./components/DestinationDetails";
+import { NearbyDestinationsList } from "./components/NearbyDestinationsList";
+import { useDestinations } from "./hooks/useDestinations";
+import { useCallback, useState } from "react";
 function App() {
-  const [count, setCount] = useState(0)
+  const [selected, setSelected] = useState<Destination | null>(null);
+  const [query, setQuery] = useState("a");
+  const { destinations, isLoading } = useDestinations({
+    query,
+    enabled: !!query && selected?.name !== query,
+  });
+
+  const onChange = useCallback((destination: Destination | null) => {
+    setSelected(destination);
+    if (!destination) {
+      setQuery("");
+    } else {
+      const { name } = destination;
+      setQuery(name);
+    }
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className=" bg-neutral-100 rounded-3xl px-20 pt-32 pb-20 mb-20">
+        <ComboBox
+          destinations={destinations}
+          {...{ isLoading, query, onChange, selected }}
+          onQueryChange={setQuery}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {selected && (
+        <>
+          <DestinationDetails destination={selected} />
+          <NearbyDestinationsList current={selected} onSelect={onChange} />
+        </>
+      )}
+      {}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
