@@ -15,7 +15,7 @@ function App() {
   } = useDebouncedState("", 300);
   const { destinations, isLoading, error } = useDestinations({
     query,
-    enabled: !!query && selected?.name !== query,
+    enabled: !!query && selected?.name !== inputValue,
   });
 
   const onChange = useCallback(
