@@ -1,27 +1,11 @@
-# React + TypeScript + Vite
+# Location Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Contains a Vite + React + Typescript App that mocks an API connection to search for travel destinations.
 
-Currently, two official plugins are available:
+- [MUI Base UI](https://mui.com/base-ui/react-autocomplete/): Base combo box hook ensuring accessibility
+- [TailwindCSS](https://tailwindcss.com/): Utility-first approach for styling elements (speeds-up the development process)
+- [React-query](https://tanstack.com/query/v4/docs/react/overview): Handle client side catching
+- [Vite](https://vitejs.dev/): Fast project bootstraping
+- [Vercel](https://vercel.com/): Quick deployment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+🏠 [https://mozio-iota.vercel.app/](https://mozio-iota.vercel.app/)
