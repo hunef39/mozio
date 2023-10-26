@@ -2,7 +2,7 @@ import { useAutocomplete } from "@mui/base/useAutocomplete";
 import { Destination } from "../api/model";
 
 interface Props {
-  query: string;
+  inputValue: string;
   isLoading: boolean;
   destinations: Destination[] | undefined;
   onQueryChange: (query: string) => void;
@@ -15,7 +15,7 @@ export function ComboBox({
   destinations,
   onQueryChange,
   onChange,
-  query,
+  inputValue,
   isLoading,
   selected,
   error,
@@ -32,7 +32,7 @@ export function ComboBox({
     id: "combo-box",
     options: destinations ?? [],
     getOptionLabel: ({ name }) => name,
-    inputValue: query,
+    inputValue,
     onInputChange: (_, value) => onQueryChange(value),
     onChange: (_, destination) => onChange(destination),
     selectOnFocus: true,
@@ -40,7 +40,8 @@ export function ComboBox({
     value: selected,
   });
 
-  const shouldDisplayMenu = !!query && selected?.name !== query && focused;
+  const shouldDisplayMenu =
+    !!inputValue && selected?.name !== inputValue && focused;
 
   return (
     <div className="relative ">
