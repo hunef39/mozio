@@ -8,16 +8,22 @@ interface Props {
 }
 
 export const useDestinations = ({ query, enabled }: Props) => {
-  const { data: destinations, isLoading } = useQuery<Destination[]>({
+  const {
+    data: destinations,
+    isLoading,
+    error,
+  } = useQuery<Destination[]>({
     queryKey: ["destinations", { query }],
     queryFn() {
       return getDestinations(query);
     },
     enabled,
+    retry: false,
   });
 
   return {
     destinations,
     isLoading,
+    error: error ? String(error) : undefined,
   };
 };

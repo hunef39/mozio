@@ -4,9 +4,16 @@ import { Destination } from "./model";
 
 const REQUEST_DELAY_MS = 900;
 
-const timedOutPromise = <T>(result: T, timeout: number) =>
-  new Promise<T>((resolve) => {
+const timedOutPromise = <T>(
+  result: T,
+  timeout: number,
+  shouldReject?: boolean
+) =>
+  new Promise<T>((resolve, reject) => {
     setTimeout(() => {
+      if (shouldReject) {
+        reject("Something went wrong, please try again later.");
+      }
       resolve(result);
     }, timeout);
   });
@@ -20,7 +27,8 @@ export const getDestinations = (query?: string | undefined) => {
           d.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
         )
       : DESTINATIONS,
-    REQUEST_DELAY_MS
+    REQUEST_DELAY_MS,
+    query === "fail"
   );
 };
 

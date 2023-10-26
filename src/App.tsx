@@ -8,7 +8,7 @@ import { useCallback, useState } from "react";
 function App() {
   const [selected, setSelected] = useState<Destination | null>(null);
   const [query, setQuery] = useState("a");
-  const { destinations, isLoading } = useDestinations({
+  const { destinations, isLoading, error } = useDestinations({
     query,
     enabled: !!query && selected?.name !== query,
   });
@@ -28,7 +28,7 @@ function App() {
       <div className=" bg-neutral-100 rounded-3xl px-20 pt-32 pb-20 mb-20">
         <ComboBox
           destinations={destinations}
-          {...{ isLoading, query, onChange, selected }}
+          {...{ isLoading, query, onChange, selected, error }}
           onQueryChange={setQuery}
         />
       </div>

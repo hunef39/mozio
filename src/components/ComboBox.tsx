@@ -8,6 +8,7 @@ interface Props {
   onQueryChange: (query: string) => void;
   onChange: (destination: Destination | null) => void;
   selected: Destination | null;
+  error?: string | undefined;
 }
 
 export function ComboBox({
@@ -17,6 +18,7 @@ export function ComboBox({
   query,
   isLoading,
   selected,
+  error,
 }: Props) {
   const {
     getRootProps,
@@ -55,13 +57,10 @@ export function ComboBox({
 
       {shouldDisplayMenu && (
         <div className="mt-2 bg-white shadow-lg rounded-lg absolute w-full">
-          {isLoading ? (
-            <div className="py-4">
-              <span className="loader text-slate-400" />
-            </div>
-          ) : !destinations?.length ? (
-            <div className="py-4">No Results</div>
-          ) : (
+          <MenuWrapper
+            noResults={!destinations?.length}
+            {...{ isLoading, error }}
+          >
             <ul {...getListboxProps()} className="flex flex-col">
               {(groupedOptions as Destination[]).map((option, index) => {
                 const props = getOptionProps({ option, index });
@@ -75,9 +74,36 @@ export function ComboBox({
                 );
               })}
             </ul>
-          )}
+          </MenuWrapper>
         </div>
       )}
     </div>
   );
 }
+
+interface MenuProps {
+  noResults: boolean;
+  isLoading: boolean;
+  error: string | undefined;
+  children: React.ReactNode;
+}
+
+const MenuWrapper = ({ isLoading, error, children, noResults }: MenuProps) => {
+  if (isLoading) {
+    return (
+      <div className="py-4">
+        <span className="loader text-slate-400" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
+
+  if (noResults) {
+    return <div className="py-4">No Results</div>;
+  }
+
+  return children;
+};
